@@ -1,6 +1,9 @@
 # homebrew
 export PATH=/opt/homebrew/bin:$PATH
 
+# docker composeコマンドを短縮
+alias dc='docker compose'
+
 # nvm
 export NVM_DIR="${HOME}/.nvm"
 [ -s "${NVM_DIR}/nvm.sh" ] && \. "${NVM_DIR}/nvm.sh"
