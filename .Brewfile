@@ -3,6 +3,7 @@ cask_args appdir: "/Applications"
 tap "homebrew/bundle"
 tap "homebrew/cask"
 tap "homebrew/core"
+tap "homebrew/cask-fonts"
 
 brew 'anyenv'
 brew 'bat' #cat
@@ -46,6 +47,8 @@ cask 'sourcetree'
 cask 'spotify'
 cask 'swiftbar'
 cask 'visual-studio-code'
+
+cask 'font-hack-nerd-font'
 
 mas 'RunCat', id: 1429033973
 mas 'WireGuard', id: 1451685025
