@@ -63,8 +63,12 @@ export PATH="/usr/local/opt/openssl/bin:$PATH"
 # gettext
 export PATH="/usr/local/opt/gettext/bin:$PATH"
 
+# Docker
 # Dockerイメージのなりすまし、改ざんから保護
-export DOCKER_CONTENT_TRUST=1
+# export DOCKER_CONTENT_TRUST=1
+
+# sailがインストールできないので0に変更
+export DOCKER_CONTENT_TRUST=0
 
 # zshでno match foundとでたときの解決方法
 # https://www.wwwmaplesyrup-cs6.work/entry/2020/08/08/030240
