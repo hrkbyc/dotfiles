@@ -46,6 +46,8 @@ load-nvmrc
 # flutter
 # --------
 export PATH="$PATH=:$HOME/flutter/bin"
+# fvm
+export PATH="$PATH=:$HOME/.pub-cache/bin"
 
 # zshでno match foundとでたときの解決方法
 # https://www.wwwmaplesyrup-cs6.work/entry/2020/08/08/030240
