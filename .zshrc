@@ -11,6 +11,11 @@ alias dc='docker compose'
 # sailがインストールできないので0に変更
 export DOCKER_CONTENT_TRUST=0
 
+# ------
+# anyenv
+# ------
+eval "$(anyenv init -)"
+
 # ----
 # nvm
 # ----
