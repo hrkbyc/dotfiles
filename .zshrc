@@ -116,3 +116,6 @@ eval "$(goenv init -)"
 
 # JAVA
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+
+# Laravel Sail
+alias sail='[ -f sail ] && sh sail || sh vendor/bin/sail'
