@@ -14,6 +14,7 @@ export DOCKER_CONTENT_TRUST=0
 # ------
 # anyenv
 # ------
+export PATH="$HOME/.anyenv/bin:$PATH"
 eval "$(anyenv init -)"
 
 # ----
