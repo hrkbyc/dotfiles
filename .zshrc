@@ -108,3 +108,11 @@ else
     fi
 fi
 unset __conda_setup
+
+# go
+export GOENV_ROOT=$HOME/.goenv
+export PATH=$GOENV_ROOT/bin:$PATH
+eval "$(goenv init -)"
+
+# JAVA
+export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
