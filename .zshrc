@@ -51,7 +51,7 @@ load-nvmrc
 # --------
 # flutter
 # --------
-export PATH="$PATH=:$HOME/flutter/bin"
+export PATH="$PATH":"$HOME/fvm/default/bin"
 # fvm
 export PATH="$PATH=:$HOME/.pub-cache/bin"
 
