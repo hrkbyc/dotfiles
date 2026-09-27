@@ -50,6 +50,11 @@ cask 'visual-studio-code'
 cask 'font-hack-nerd-font'
 cask 'keyboardcleantool'
 
+# JDK（jenv に登録して切り替える。global は 21）
+cask 'zulu@21'
+cask 'zulu@17'
+cask 'zulu@11'
+
 mas 'RunCat', id: 1429033973
 mas 'WireGuard', id: 1451685025
 # mas 'LINE', id: 539883307
