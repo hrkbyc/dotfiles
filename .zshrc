@@ -1,5 +1,11 @@
+# PATHの重複を自動除去（入れ子シェルで多重登録されるのを防ぐ。先勝ちで順序は維持される）
+typeset -U path PATH
+
 # homebrew
 export PATH=/opt/homebrew/bin:$PATH
+
+# ユーザーローカルのバイナリ（claude の native build など）。homebrew より優先する
+export PATH="$HOME/.local/bin:$PATH"
 
 # -------
 # Docker
@@ -12,37 +18,86 @@ alias dc='docker compose'
 export DOCKER_CONTENT_TRUST=0
 
 # ------
-# anyenv
+# anyenv（遅延ロード）
 # ------
-export PATH="$HOME/.anyenv/bin:$PATH"
-eval "$(anyenv init -)"
+# eval "$(anyenv init -)" は各 env の rehash（shim 再生成）を毎回走らせるため約0.63秒かかる。
+# 日常的に必要なのは shims が PATH にあることだけなので、それを静的に設定し、
+# *env コマンド本体（shell / rehash サブコマンド用の関数）は初回実行時に初期化する。
+# 新しい言語バージョンや gem/pip の実行ファイルを入れた直後は `rbenv rehash` 等を手動で。
+export ANYENV_ROOT="$HOME/.anyenv"
+export GOENV_ROOT="$ANYENV_ROOT/envs/goenv"
+export JENV_ROOT="$ANYENV_ROOT/envs/jenv"
+export PYENV_ROOT="$ANYENV_ROOT/envs/pyenv"
+export RBENV_ROOT="$ANYENV_ROOT/envs/rbenv"
+export TFENV_ROOT="$ANYENV_ROOT/envs/tfenv"
+
+# anyenv init - と同じ PATH 順序を静的に再現する
+path=(
+  "$TFENV_ROOT/bin"
+  "$RBENV_ROOT/shims" "$RBENV_ROOT/bin"
+  "$PYENV_ROOT/shims" "$PYENV_ROOT/bin"
+  "$JENV_ROOT/shims"  "$JENV_ROOT/bin"
+  "$GOENV_ROOT/bin"
+  "$ANYENV_ROOT/bin"
+  $path
+  "$GOENV_ROOT/shims"
+)
+
+# *env コマンドは初回実行時に本体を初期化する
+_anyenv_lazy_init() {
+  unset -f anyenv goenv jenv pyenv rbenv 2>/dev/null
+  eval "$(command anyenv init -)"
+}
+for _e in anyenv goenv jenv pyenv rbenv; do
+  eval "${_e}() { _anyenv_lazy_init; ${_e} \"\$@\"; }"
+done
+unset _e
 
 # ----
-# nvm
+# nvm（遅延ロード）
 # ----
+# 起動時に nvm.sh を読むと約1秒かかるため読まない。代わりに default バージョンの bin を
+# 静的に PATH へ通すので、node / npm / npx は nvm 初期化なしで即使える。
+# nvm コマンド自体と .nvmrc の自動切替は、必要になった時だけ本体を読み込む。
 export NVM_DIR="${HOME}/.nvm"
-[ -s "${NVM_DIR}/nvm.sh" ] && \. "${NVM_DIR}/nvm.sh"
-[ -s "${NVM_DIR}/bash_completion" ] && \. "${NVM_DIR}/bash_completion"
+
+# default バージョンの bin を PATH に追加
+() {
+  local default_alias
+  local -a node_dirs
+  [[ -r "$NVM_DIR/alias/default" ]] || return
+  default_alias="$(<"$NVM_DIR/alias/default")"
+  [[ -n "$default_alias" ]] || return
+  node_dirs=( "$NVM_DIR"/versions/node/v${default_alias}*(/Nn) )
+  (( $#node_dirs )) && export PATH="${node_dirs[-1]}/bin:$PATH"
+}
+
+# nvm コマンドは初回実行時に本体を読み込む
+nvm() {
+  unset -f nvm
+  [ -s "${NVM_DIR}/nvm.sh" ] && \. "${NVM_DIR}/nvm.sh"
+  [ -s "${NVM_DIR}/bash_completion" ] && \. "${NVM_DIR}/bash_completion"
+  nvm "$@"
+}
 
 # .nvmrcで指定したバージョンに自動で切り替えてプロジェクトをスタートする
 # https://qiita.com/cleverdog/items/f50dcff0bc2905816b8e
-# place this after nvm initialization!
+# .nvmrc を見つけた時だけ nvm を初期化する（元は起動のたびに nvm version を呼んでいた）
 autoload -U add-zsh-hook
 load-nvmrc() {
-  local node_version="$(nvm version)"
-  local nvmrc_path="$(nvm_find_nvmrc)"
-
-  if [ -n "$nvmrc_path" ]; then
-    local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
-
-    if [ "$nvmrc_node_version" = "N/A" ]; then
-      nvm install
-    elif [ "$nvmrc_node_version" != "$node_version" ]; then
-      nvm use
+  local dir="$PWD"
+  while [[ -n "$dir" && "$dir" != "/" ]]; do
+    if [[ -f "$dir/.nvmrc" ]]; then
+      nvm use 2>/dev/null || nvm install
+      _NVM_SWITCHED=1
+      return
     fi
-  elif [ "$node_version" != "$(nvm version default)" ]; then
+    dir="${dir:h}"
+  done
+  if [[ -n "${_NVM_SWITCHED-}" ]]; then
     echo "Reverting to nvm default version"
     nvm use default
+    unset _NVM_SWITCHED
   fi
 }
 add-zsh-hook chpwd load-nvmrc
@@ -53,7 +108,7 @@ load-nvmrc
 # --------
 export PATH="$PATH":"$HOME/fvm/default/bin"
 # fvm
-export PATH="$PATH=:$HOME/.pub-cache/bin"
+export PATH="$PATH:$HOME/.pub-cache/bin"
 
 # zshでno match foundとでたときの解決方法
 # https://www.wwwmaplesyrup-cs6.work/entry/2020/08/08/030240
@@ -110,10 +165,16 @@ else
 fi
 unset __conda_setup
 
-# go
+# go（遅延ロード）
+# 注: goenv が2つ存在する（~/.goenv と ~/.anyenv/envs/goenv）。従来どおり前者を採用し、
+#     anyenv 側が設定した GOENV_ROOT をここで上書きしている。整理は要検討。
 export GOENV_ROOT=$HOME/.goenv
-export PATH=$GOENV_ROOT/bin:$PATH
-eval "$(goenv init -)"
+path=( "$GOENV_ROOT/bin" $path "$GOENV_ROOT/shims" )
+goenv() {
+  unset -f goenv
+  eval "$(command goenv init -)"
+  goenv "$@"
+}
 
 # Laravel Sail
 alias sail='[ -f sail ] && sh sail || sh vendor/bin/sail'
@@ -133,7 +194,8 @@ export PATH=$PATH:/Applications/"Android Studio.app"/Contents/jre/Contents/Home/
 export JAVA_HOME=/Applications/"Android Studio.app"/Contents/jre/Contents/Home
 
 # yarn
-export PATH="$(yarn global bin):$PATH"
+# 元は $(yarn global bin) を毎回起動していた（node 起動で約0.28秒）。値は固定なので直接指定する
+export PATH="$HOME/.yarn/bin:$PATH"
 
 # direnv
 eval "$(direnv hook zsh)"
@@ -141,3 +203,14 @@ export AWS_PROFILE=admin
 
 # Unity CLI
 . "/Users/hrkbyc/.unity/env"
+
+# 補完の初期化
+# 以前は nvm の bash_completion から呼ばれていたが、nvm を遅延ロードにしたのでここで明示的に行う。
+# .zcompdump が24時間以内なら検証を省いてキャッシュを使う（約0.3秒短縮）。
+# 補完が効かなくなったら `rm ~/.zcompdump` で作り直せる。
+autoload -Uz compinit
+if [[ -n ${ZDOTDIR:-$HOME}/.zcompdump(#qN.mh+24) ]]; then
+  compinit
+else
+  compinit -C
+fi
