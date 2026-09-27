@@ -96,7 +96,8 @@ bindkey -s "\C-r" "\C-a hstr -- \C-j"     # bind hstr to Ctrl-r (for Vi mode che
 # zsh-autosuggestions
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-# conda
+# conda (baseは自動activateしない)
+export CONDA_AUTO_ACTIVATE_BASE=false
 __conda_setup="$('/opt/homebrew/Caskroom/miniforge/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
@@ -104,7 +105,7 @@ else
     if [ -f "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh" ]; then
         . "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh"
     else
-        export PATH="/opt/homebrew/Caskroom/miniforge/base/bin:$PATH"
+        export PATH="$PATH:/opt/homebrew/Caskroom/miniforge/base/bin"
     fi
 fi
 unset __conda_setup
@@ -114,8 +115,29 @@ export GOENV_ROOT=$HOME/.goenv
 export PATH=$GOENV_ROOT/bin:$PATH
 eval "$(goenv init -)"
 
-# JAVA
-export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
-
 # Laravel Sail
 alias sail='[ -f sail ] && sh sail || sh vendor/bin/sail'
+
+# sbin
+export PATH="/opt/homebrew/sbin:$PATH"
+
+# mysql-client
+export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
+
+## [Completion]
+## Completion scripts setup. Remove the following line to uninstall
+[[ -f /Users/hrkbyc/.dart-cli-completion/zsh-config.zsh ]] && . /Users/hrkbyc/.dart-cli-completion/zsh-config.zsh || true
+## [/Completion]
+
+export PATH=$PATH:/Applications/"Android Studio.app"/Contents/jre/Contents/Home/bin
+export JAVA_HOME=/Applications/"Android Studio.app"/Contents/jre/Contents/Home
+
+# yarn
+export PATH="$(yarn global bin):$PATH"
+
+# direnv
+eval "$(direnv hook zsh)"
+export AWS_PROFILE=admin
+
+# Unity CLI
+. "/Users/hrkbyc/.unity/env"
