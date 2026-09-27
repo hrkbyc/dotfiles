@@ -201,15 +201,26 @@ export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 # java / javac は jenv の shims 経由で解決され、.java-version があるディレクトリでは
 # そのバージョンが使われる。
 #
-# jenv は遅延ロードのため起動時に init が走らない。JAVA_HOME は global の設定ファイルを
-# 直接読んで設定する（サブプロセスを起動しないので実質ノーコスト）。
-# jenv shell / jenv local で切り替えた場合は export プラグインが JAVA_HOME を更新する。
-if [[ -r "$JENV_ROOT/version" ]]; then
-  _jenv_version="$(<"$JENV_ROOT/version")"
-  [[ -d "$JENV_ROOT/versions/$_jenv_version" ]] &&
-    export JAVA_HOME="$JENV_ROOT/versions/$_jenv_version"
-  unset _jenv_version
-fi
+# jenv は遅延ロードのため起動時に init が走らず、JAVA_HOME を設定してくれない。
+# java/javac の shim は .java-version を自分で読むので問題ないが、Gradle や Maven は
+# JAVA_HOME を見るため、追従しないと ./gradlew がプロジェクト指定のJDKで動かない。
+# そこで .java-version をファイル探索だけで辿って JAVA_HOME を設定する
+# （サブプロセスを起動しないので実質ノーコスト。cd のたびに追従する）。
+_jenv_set_java_home() {
+  local dir="$PWD" ver=""
+  while [[ -n "$dir" && "$dir" != "/" ]]; do
+    if [[ -r "$dir/.java-version" ]]; then
+      ver="$(<"$dir/.java-version")"
+      break
+    fi
+    dir="${dir:h}"
+  done
+  [[ -z "$ver" && -r "$JENV_ROOT/version" ]] && ver="$(<"$JENV_ROOT/version")"
+  [[ -n "$ver" && -d "$JENV_ROOT/versions/$ver" ]] &&
+    export JAVA_HOME="$JENV_ROOT/versions/$ver"
+}
+add-zsh-hook chpwd _jenv_set_java_home
+_jenv_set_java_home
 
 # yarn
 # 元は $(yarn global bin) を毎回起動していた（node 起動で約0.28秒）。値は固定なので直接指定する
