@@ -31,6 +31,11 @@ export PYENV_ROOT="$ANYENV_ROOT/envs/pyenv"
 export RBENV_ROOT="$ANYENV_ROOT/envs/rbenv"
 export TFENV_ROOT="$ANYENV_ROOT/envs/tfenv"
 
+# jenv の shim は JENV_LOADED を見ており、未設定だと実行のたびに警告を stderr へ出す
+# （処理自体は継続する）。遅延ロードでは init が走らないので、この2つだけ静的に設定する。
+export JENV_SHELL=zsh
+export JENV_LOADED=1
+
 # anyenv init - と同じ PATH 順序を静的に再現する
 path=(
   "$TFENV_ROOT/bin"
@@ -189,8 +194,21 @@ export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 [[ -f /Users/hrkbyc/.dart-cli-completion/zsh-config.zsh ]] && . /Users/hrkbyc/.dart-cli-completion/zsh-config.zsh || true
 ## [/Completion]
 
-export PATH=$PATH:/Applications/"Android Studio.app"/Contents/jre/Contents/Home/bin
-export JAVA_HOME=/Applications/"Android Studio.app"/Contents/jre/Contents/Home
+# Java（jenv 管理）
+# 以前は JAVA_HOME を Android Studio 同梱の JBR に固定し、jenv は未設定で遊んでいた。
+# brew cask の zulu@21 / @17 / @11 を jenv に登録し、global を 21.0.5 に設定済み。
+# java / javac は jenv の shims 経由で解決され、.java-version があるディレクトリでは
+# そのバージョンが使われる。
+#
+# jenv は遅延ロードのため起動時に init が走らない。JAVA_HOME は global の設定ファイルを
+# 直接読んで設定する（サブプロセスを起動しないので実質ノーコスト）。
+# jenv shell / jenv local で切り替えた場合は export プラグインが JAVA_HOME を更新する。
+if [[ -r "$JENV_ROOT/version" ]]; then
+  _jenv_version="$(<"$JENV_ROOT/version")"
+  [[ -d "$JENV_ROOT/versions/$_jenv_version" ]] &&
+    export JAVA_HOME="$JENV_ROOT/versions/$_jenv_version"
+  unset _jenv_version
+fi
 
 # yarn
 # 元は $(yarn global bin) を毎回起動していた（node 起動で約0.28秒）。値は固定なので直接指定する
