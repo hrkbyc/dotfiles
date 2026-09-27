@@ -47,8 +47,8 @@ cask 'sourcetree'
 cask 'spotify'
 cask 'swiftbar'
 cask 'visual-studio-code'
-
 cask 'font-hack-nerd-font'
+cask 'keyboardcleantool'
 
 mas 'RunCat', id: 1429033973
 mas 'WireGuard', id: 1451685025
