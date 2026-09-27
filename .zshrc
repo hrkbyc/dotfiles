@@ -165,16 +165,15 @@ else
 fi
 unset __conda_setup
 
-# go（遅延ロード）
-# 注: goenv が2つ存在する（~/.goenv と ~/.anyenv/envs/goenv）。従来どおり前者を採用し、
-#     anyenv 側が設定した GOENV_ROOT をここで上書きしている。整理は要検討。
-export GOENV_ROOT=$HOME/.goenv
-path=( "$GOENV_ROOT/bin" $path "$GOENV_ROOT/shims" )
-goenv() {
-  unset -f goenv
-  eval "$(command goenv init -)"
-  goenv "$@"
-}
+# go
+# goenv は anyenv 側（~/.anyenv/envs/goenv）に一本化した。GOENV_ROOT・shims の PATH 登録・
+# 遅延ロードのスタブはすべて上の anyenv ブロックで設定済みなので、ここでは何もしない。
+#
+# 以前はここで GOENV_ROOT=$HOME/.goenv に上書きし、~/.goenv/shims も PATH に追加していた。
+# その結果 goenv の shims ディレクトリが PATH に2つ並び、バージョン未設定（= system）かつ
+# システムに go が無い状態で goenv-which が互いの shim を呼び合って無限再帰し、
+# go コマンドがハングしていた。shims の二重登録は避けること。
+# 旧 ~/.goenv は未参照（Go 1.20.1 の重複コピー 262MB を含む。削除可）。
 
 # Laravel Sail
 alias sail='[ -f sail ] && sh sail || sh vendor/bin/sail'
