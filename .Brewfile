@@ -57,7 +57,8 @@ brew 'gitleaks'
 # ------------------------------------------------------------------
 # 言語・ランタイム
 # ------------------------------------------------------------------
-brew 'openjdk@17'
+# JDK は cask の zulu@21/@17/@11 を jenv で管理する（下の cask セクション参照）。
+# formula の openjdk@17 は Zulu 17.0.16 と完全に重複していたため削除した。
 brew 'perl'
 brew 'php'
 brew 'rustup'
@@ -70,7 +71,7 @@ brew 'pkgconf'
 # ------------------------------------------------------------------
 brew 'awscli'
 brew 'azure-cli'
-brew 'terraform'
+# terraform は tfenv（anyenv 経由）で管理する。brew で入れると PATH が競合するため記載しない
 brew 'terraformer'
 brew 'circleci'
 
