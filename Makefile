@@ -1,13 +1,17 @@
+# 適用するホスト（work / personal）。例: make switch HOST=work
+HOST ?=
+
 # Do everything.
-all: init link defaults brew
+all: init switch defaults brew
 
 # Set initial preference.
 init:
 	bash init.sh
 
-# Link dotfiles.
-link:
-	bash link.sh
+# Link dotfiles and apply Home Manager configuration.
+switch:
+	$(if $(HOST),,$(error HOST=work または HOST=personal を指定してください))
+	nix run .#home-manager -- switch --flake .#$(HOST)
 
 # Set macOS system preferences.
 defaults:
