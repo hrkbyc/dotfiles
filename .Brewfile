@@ -159,7 +159,7 @@ cask 'google-earth-pro'
 # cask 'kindle'  ※ Homebrew から削除済み
 
 # --- フォント ---
-cask 'font-hack-nerd-font'
+# Hack Nerd Font は ~/Library/Fonts に手動で入れてある（brew 管理外のため記載しない）
 
 # ==================================================================
 # Mac App Store
