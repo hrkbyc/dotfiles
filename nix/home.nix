@@ -4,6 +4,7 @@
   imports = [
     ./direnv.nix
     ./files.nix
+    ./macos-defaults.nix
     ./packages.nix
     ./vim.nix
   ];
