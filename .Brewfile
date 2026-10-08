@@ -30,7 +30,7 @@ brew 'starship'
 brew 'tmux'
 brew 'reattach-to-user-namespace'
 brew 'bash-completion'
-brew 'direnv'
+# direnv は Home Manager（nix/direnv.nix）で nix-direnv と一緒に管理する
 # zsh-autosuggestions は brew ではなく ~/.zsh/ への手動 clone で管理している
 # （.zshrc が ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh を source）
 brew 'tree'

@@ -4,6 +4,10 @@ typeset -U path PATH
 # homebrew
 export PATH=/opt/homebrew/bin:$PATH
 
+# Nix（Home Manager の home.packages）。homebrew より優先する
+# /etc/zshrc の nix-daemon.sh も追加するが末尾寄りに入るため、brew と同じツールがあると brew が勝ってしまう
+export PATH="$HOME/.nix-profile/bin:$PATH"
+
 # ユーザーローカルのバイナリ（claude の native build など）。homebrew より優先する
 export PATH="$HOME/.local/bin:$PATH"
 
