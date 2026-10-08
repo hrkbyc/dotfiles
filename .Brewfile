@@ -40,7 +40,7 @@ brew 'git'
 # formula の openjdk@17 は Zulu 17.0.16 と完全に重複していたため削除した。
 brew 'perl'
 brew 'php'
-brew 'rustup'
+# rustup は試しに入れただけで未使用のため外した（使うときは環境を作り直す）
 brew 'protobuf'
 brew 'cmake'
 brew 'pkgconf'
