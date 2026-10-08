@@ -111,8 +111,9 @@ cask 'zulu@17'
 cask 'zulu@11'
 
 # --- Python ディストリビューション ---
+# .zshrc の conda は miniforge を使う。プロジェクトの Python は pyenv（anyenv 経由）。
+# anaconda は未使用（conda 環境なし・参照なし）のため外した
 cask 'miniforge'
-cask 'anaconda'
 
 # --- ユーティリティ ---
 cask '1password'
