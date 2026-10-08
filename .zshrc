@@ -231,7 +231,6 @@ export PATH="$HOME/.yarn/bin:$PATH"
 
 # direnv
 eval "$(direnv hook zsh)"
-export AWS_PROFILE=admin
 
 # Unity CLI（Unity を入れていない Mac ではファイルが無いので、あるときだけ読む）
 [[ -r "$HOME/.unity/env" ]] && . "$HOME/.unity/env"
@@ -246,3 +245,8 @@ if [[ -n ${ZDOTDIR:-$HOME}/.zcompdump(#qN.mh+24) ]]; then
 else
   compinit -C
 fi
+
+# マシン固有の設定（リポジトリには入れない）。最後に読むので、ここまでの値を上書きできる。
+# 例: 仕事用 Mac では export AWS_PROFILE=bws-sso（日常操作は SSO の短期資格情報で行う。
+#     長期アクセスキーの admin / terraform は --profile を明示したときだけ使う。terraform-for-bws #111）
+[[ -r ~/.zshrc.local ]] && source ~/.zshrc.local
