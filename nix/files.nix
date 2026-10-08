@@ -14,6 +14,7 @@ in
   home.file = {
     ".zshrc".source = link ".zshrc";
     ".vimrc".source = link ".vimrc";
+    ".vim/dein.toml".source = link ".vim/dein.toml";
     ".tmux.conf".source = link ".tmux.conf";
     ".gitignore_global".source = link ".gitignore_global";
     ".Brewfile".source = link ".Brewfile";
