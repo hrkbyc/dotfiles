@@ -5,6 +5,7 @@
     ./direnv.nix
     ./files.nix
     ./packages.nix
+    ./vim.nix
   ];
 
   home.username = username;

@@ -20,7 +20,15 @@
           username ? "hrkbyc",
         }:
         home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.${system};
+          pkgs = import nixpkgs {
+            inherit system;
+            # unfree は名前を挙げたものだけ許可する
+            config.allowUnfreePredicate =
+              pkg:
+              builtins.elem (nixpkgs.lib.getName pkg) [
+                "vim-trailing-whitespace" # vim プラグイン。ライセンス表記が無く nixpkgs では unfree 扱い
+              ];
+          };
           extraSpecialArgs = { inherit username; };
           modules = [
             ./nix/home.nix

@@ -2,51 +2,10 @@ set encoding=utf-8 " ファイル読込時の文字コード
 scriptencoding utf-8 " マルチバイト文字を使う場合の設定
 
 "----------------------------------------------------------
-" dein.vim設定
+" プラグイン
 "----------------------------------------------------------
-" プラグインが実際にインストールされるディレクトリ
-let s:dein_dir = expand('~/.cache/dein')
-" dein.vim本体
-let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
-
-" dein.vimがなければgithubから落としてくる
-if &runtimepath !~# '/dein.vim'
-    if !isdirectory(s:dein_repo_dir)
-        execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo_dir
-    endif
-    execute 'set runtimepath^=' . fnamemodify(s:dein_repo_dir, ':p')
-endif
-
-" 設定開始
-if dein#load_state(s:dein_dir)
-    call dein#begin(s:dein_dir)
-
-    " プラグインリストを収めたTOMLファイル
-    let s:rc_dir = expand('~/.vim')
-    if !isdirectory(s:rc_dir)
-        call mkdir(s:rc_dir, 'p')
-    endif
-    let s:toml = s:rc_dir . '/dein.toml'
-
-    " TOMLを読み込み、キャッシュしておく
-    call dein#load_toml(s:toml, {'lazy': 0})
-
-    " 設定終了
-    call dein#end()
-    call dein#save_state()
-endif
-
-" もし、未インストールのプラグインがある場合はインストール
-if dein#check_install()
-    call dein#install()
-endif
-
-" もし、削除するプラグインがある場合は削除する
-let s:removed_plugins = dein#check_clean()
-if len(s:removed_plugins) > 0
-    call map(s:removed_plugins, "delete(v:val, 'rf')")
-    call dein#recache_runtimepath()
-endif
+" プラグインは Home Manager（nix/vim.nix）が ~/.vim/pack/nix/start/ に置き、
+" Vim 標準のパッケージ機能で起動時に読み込まれる（以前の dein.vim は廃止）
 
 "----------------------------------------------------------
 " 文字コード

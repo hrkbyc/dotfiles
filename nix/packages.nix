@@ -23,7 +23,7 @@
     tmux
     reattach-to-user-namespace # .tmux.conf のコピーで使う
     tree
-    vim # macOS 標準と同じ機能（+clipboard、lua なし）で新しい版
+    # vim は nix/vim.nix（プラグインと一緒に管理）
     wget
     jq
     pv
