@@ -1,0 +1,44 @@
+# git のグローバル設定（Home Manager の nix/files.nix で ~/.gitconfig にリンクする）。
+# [user]（名前・メールアドレス）は Mac ごとに ~/.gitconfig.local へ書く（リポジトリには入れない）。
+#   git config --file ~/.gitconfig.local user.name  "<名前>"
+#   git config --file ~/.gitconfig.local user.email "<メールアドレス>"
+# git config --global で書き込むとこのファイル（~/dotfiles/.gitconfig）が書き換わるので、
+# マシン固有の値は --file ~/.gitconfig.local を使う。
+[core]
+	autocrlf = input
+	filemode = false
+	ignorecase = false
+	precomposeunicode = true
+	excludesfile = ~/.gitignore_global
+	quotepath = false
+[color]
+	ui = true
+	diff = auto
+	status = auto
+	branch = auto
+[merge]
+	conflictStyle = diff3
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path =
+[mergetool "sourcetree"]
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[commit]
+	template = ~/.stCommitMsg
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+# git-secrets（allowed は AWS ドキュメントのサンプル値）
+[secrets]
+	providers = git secrets --aws-provider
+	patterns = (A3T[A-Z0-9]|AKIA|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}
+	patterns = (\"|')?(AWS|aws|Aws)?_?(SECRET|secret|Secret)?_?(ACCESS|access|Access)?_?(KEY|key|Key)(\"|')?\\s*(:|=>|=)\\s*(\"|')?[A-Za-z0-9/\\+=]{40}(\"|')?
+	patterns = (\"|')?(AWS|aws|Aws)?_?(ACCOUNT|account|Account)_?(ID|id|Id)?(\"|')?\\s*(:|=>|=)\\s*(\"|')?[0-9]{4}\\-?[0-9]{4}\\-?[0-9]{4}(\"|')?
+	allowed = AKIAIOSFODNN7EXAMPLE
+	allowed = wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+# マシン固有の設定（[user] など）。最後に読むので、ここまでの値を上書きできる
+[include]
+	path = ~/.gitconfig.local

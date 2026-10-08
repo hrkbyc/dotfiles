@@ -195,7 +195,7 @@ export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 
 ## [Completion]
 ## Completion scripts setup. Remove the following line to uninstall
-[[ -f /Users/hrkbyc/.dart-cli-completion/zsh-config.zsh ]] && . /Users/hrkbyc/.dart-cli-completion/zsh-config.zsh || true
+[[ -f "$HOME/.dart-cli-completion/zsh-config.zsh" ]] && . "$HOME/.dart-cli-completion/zsh-config.zsh" || true
 ## [/Completion]
 
 # Java（jenv 管理）
@@ -233,8 +233,8 @@ export PATH="$HOME/.yarn/bin:$PATH"
 eval "$(direnv hook zsh)"
 export AWS_PROFILE=admin
 
-# Unity CLI
-. "/Users/hrkbyc/.unity/env"
+# Unity CLI（Unity を入れていない Mac ではファイルが無いので、あるときだけ読む）
+[[ -r "$HOME/.unity/env" ]] && . "$HOME/.unity/env"
 
 # 補完の初期化
 # 以前は nvm の bash_completion から呼ばれていたが、nvm を遅延ロードにしたのでここで明示的に行う。
