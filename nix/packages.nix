@@ -2,9 +2,41 @@
 
 # 仕事用・個人用で共通の CLI ツール。
 # .Brewfile から移したものは、Brewfile 側の記載を消して brew uninstall する
-# （.zshrc で /opt/homebrew/bin が先頭にあるため、両方あると brew 版が優先される）。
+# （.zshrc で ~/.nix-profile/bin を homebrew より前に置いているので、残っていても Nix 版が使われる）。
 
 {
   home.packages = with pkgs; [
+    # コマンド置き換え系
+    bat # cat
+    bottom # top
+    eza # ls
+    dust # du
+    duf # df
+    fd # find
+    procs # ps
+    ripgrep # grep
+    sd # sed
+    zoxide # cd
+
+    # シェル・ターミナル
+    starship
+    tmux
+    reattach-to-user-namespace # .tmux.conf のコピーで使う
+    tree
+    wget
+    jq
+    pv
+    rsync
+
+    # Git
+    gh
+    git-lfs
+    git-secrets
+    git-filter-repo
+    gitleaks
+
+    # クラウド・インフラ
+    terraformer
+    circleci-cli
   ];
 }

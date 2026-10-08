@@ -8,51 +8,38 @@ tap "leoafarias/fvm"
 tap "shopify/shopify"
 tap "stablyai/orca"
 
+# 汎用の CLI ツールは Home Manager（nix/packages.nix）で管理する。
+# ここに残すのは、Nix に移すと不都合があるもの・GUI・ライブラリ・ランタイム類。
+
 # ------------------------------------------------------------------
 # CLI（コマンド置き換え系）
 # ------------------------------------------------------------------
-brew 'bat' #cat
-brew 'bottom' #top
-brew 'eza' #ls  ※ exa は Homebrew から削除されたため後継の eza に変更
-brew 'dust' #du
-brew 'duf' #df
-brew 'fd' #find
+# bat / bottom / eza / dust / duf / fd / procs / ripgrep / sd / zoxide は nix/packages.nix
 brew 'httpie' #curl
-brew 'procs' #ps
-brew 'ripgrep' #grep
-brew 'sd' #sed
-brew 'zoxide' #cd
 
 # ------------------------------------------------------------------
 # シェル・ターミナル
 # ------------------------------------------------------------------
-brew 'starship'
-brew 'tmux'
-brew 'reattach-to-user-namespace'
+# starship / tmux / reattach-to-user-namespace / tree / wget / jq / pv / rsync は nix/packages.nix
 brew 'bash-completion'
 # direnv は Home Manager（nix/direnv.nix）で nix-direnv と一緒に管理する
 # zsh-autosuggestions は brew ではなく ~/.zsh/ への手動 clone で管理している
 # （.zshrc が ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh を source）
-brew 'tree'
 brew 'vim'
+# Nix の gnugrep は grep の名前で入り macOS の grep を置き換えるため、g 接頭辞で入る brew 版を使う
 brew 'grep'
-brew 'wget'
-brew 'jq'
-brew 'pv'
+# Nix では inetutils（ping / hostname なども一緒に入る）になるため brew のまま
 brew 'telnet'
-brew 'rsync'
+# brew bundle が Mac App Store の行を処理するのに使う
 brew 'mas'
 
 # ------------------------------------------------------------------
 # バージョン管理・Git
 # ------------------------------------------------------------------
+# gh / git-lfs / git-secrets / git-filter-repo / gitleaks は nix/packages.nix
 brew 'anyenv'
+# キーチェーン連携（credential-osxkeychain）などがあるので当面 brew のまま
 brew 'git'
-brew 'gh'
-brew 'git-lfs'
-brew 'git-secrets'
-brew 'git-filter-repo'
-brew 'gitleaks'
 
 # ------------------------------------------------------------------
 # 言語・ランタイム
@@ -72,8 +59,7 @@ brew 'pkgconf'
 brew 'awscli'
 brew 'azure-cli'
 # terraform は tfenv（anyenv 経由）で管理する。brew で入れると PATH が競合するため記載しない
-brew 'terraformer'
-brew 'circleci'
+# terraformer / circleci は nix/packages.nix
 
 # ------------------------------------------------------------------
 # データベース・ミドルウェア
