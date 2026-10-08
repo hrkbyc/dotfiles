@@ -17,8 +17,7 @@ tap "stablyai/orca"
 # bat / eza / fd / ripgrep などのコマンド置き換え系、starship / tmux / vim / jq なども nix/packages.nix
 brew 'bash-completion'
 # direnv は Home Manager（nix/direnv.nix）で nix-direnv と一緒に管理する
-# zsh-autosuggestions は brew ではなく ~/.zsh/ への手動 clone で管理している
-# （.zshrc が ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh を source）
+# zsh-autosuggestions も nix/packages.nix
 # Nix の gnugrep は grep の名前で入り macOS の grep を置き換えるため、g 接頭辞で入る brew 版を使う
 brew 'grep'
 # Nix では inetutils（ping / hostname なども一緒に入る）になるため brew のまま

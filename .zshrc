@@ -156,8 +156,9 @@ eval "$(zoxide init zsh)"
 # （以前は hstr を Ctrl-R に割り当てていたが、未インストールで使っていなかったため外した。Ctrl-R は zsh 標準の履歴検索）
 setopt histignorespace
 
-# zsh-autosuggestions
-source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+# zsh-autosuggestions（Home Manager の nix/packages.nix で入れる。以前は ~/.zsh/ への手動 clone）
+[[ -r ~/.nix-profile/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]] &&
+  source ~/.nix-profile/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # conda (baseは自動activateしない)
 export CONDA_AUTO_ACTIVATE_BASE=false

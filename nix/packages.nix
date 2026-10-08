@@ -19,6 +19,7 @@
     zoxide # cd
 
     # シェル・ターミナル
+    zsh-autosuggestions # .zshrc が ~/.nix-profile/share/zsh-autosuggestions/ から source する
     starship
     tmux
     reattach-to-user-namespace # .tmux.conf のコピーで使う
