@@ -14,7 +14,7 @@ tap "stablyai/orca"
 # ------------------------------------------------------------------
 # シェル・ターミナル
 # ------------------------------------------------------------------
-# bat / eza / fd / ripgrep などのコマンド置き換え系、starship / tmux / vim / jq なども nix/packages.nix
+# bat / eza / fd / ripgrep などのコマンド置き換え系、starship / vim / jq なども nix/packages.nix
 brew 'bash-completion'
 # direnv は Home Manager（nix/direnv.nix）で nix-direnv と一緒に管理する
 # zsh-autosuggestions も nix/packages.nix

@@ -123,10 +123,6 @@ export PATH="$PATH:$HOME/.pub-cache/bin"
 # https://www.wwwmaplesyrup-cs6.work/entry/2020/08/08/030240
 setopt +o nomatch
 
-# grepに色を付けると他の色が適応されないのでOFF
-# export GREP_OPTIONS='--color=always'
-export GREP_OPTIONS='--color=never'
-
 # starship
 eval "$(starship init zsh)"
 

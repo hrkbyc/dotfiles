@@ -21,8 +21,6 @@
     # シェル・ターミナル
     zsh-autosuggestions # .zshrc が ~/.nix-profile/share/zsh-autosuggestions/ から source する
     starship
-    tmux
-    reattach-to-user-namespace # .tmux.conf のコピーで使う
     tree
     # vim は nix/vim.nix（プラグインと一緒に管理）
     wget

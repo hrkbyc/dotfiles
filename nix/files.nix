@@ -13,7 +13,7 @@ in
 {
   home.file = {
     ".zshrc".source = link ".zshrc";
-    ".vimrc".source = link ".vimrc";    ".tmux.conf".source = link ".tmux.conf";
+    ".vimrc".source = link ".vimrc";
     ".gitconfig".source = link ".gitconfig";
     ".gitignore_global".source = link ".gitignore_global";
     ".config/starship.toml".source = link ".config/starship.toml";
