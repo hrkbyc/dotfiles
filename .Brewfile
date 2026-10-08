@@ -87,22 +87,18 @@ brew 'crit'
 cask 'google-chrome'
 cask 'zoom'
 cask 'teamviewer'
-cask 'deepl'
 cask 'google-japanese-ime'
 
 # --- 開発 ---
 cask 'visual-studio-code'
 cask 'android-studio'
 cask 'unity-hub'
-cask 'docker'
-cask 'docker-desktop'
+cask 'docker-desktop' # 旧名 docker は別名
 cask 'sourcetree'
 cask 'sequel-ace'
-cask 'postman'
 cask 'ngrok'
 cask 'chromedriver'
-cask 'xcodes'
-cask 'xcodes-app'
+cask 'xcodes-app' # 旧名 xcodes は別名
 cask 'cmux'
 cask 'codex'
 cask 'orca'
@@ -120,10 +116,9 @@ cask 'anaconda'
 
 # --- ユーティリティ ---
 cask '1password'
-cask 'alfred'
+cask 'raycast'
 cask 'appcleaner'
 cask 'bartender'
-cask 'clipy'
 cask 'rectangle'
 cask 'swiftbar'
 cask 'keyboardcleantool'
@@ -141,11 +136,9 @@ cask 'cyberduck'
 cask 'tailscale-app'
 cask 'jump-desktop'
 cask 'jump-desktop-connect'
-cask 'microsoft-remote-desktop'
 cask 'chrome-remote-desktop-host'
-cask 'realvnc-connect-viewer'
-cask 'vnc-viewer'
-cask 'windows-app'
+cask 'realvnc-connect-viewer' # 旧名 vnc-viewer は別名
+cask 'windows-app' # 旧 microsoft-remote-desktop
 # cask 'dropbox'
 
 # --- クリエイティブ・3D・GIS ---
@@ -161,7 +154,6 @@ cask 'blackhole-2ch'
 cask 'obsidian'
 cask 'zotero'
 cask 'kobo'
-cask 'spotify'
 cask 'steam'
 cask 'google-earth-pro'
 # cask 'kindle'  ※ Homebrew から削除済み
