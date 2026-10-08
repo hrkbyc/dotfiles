@@ -12,20 +12,13 @@ tap "stablyai/orca"
 # ここに残すのは、Nix に移すと不都合があるもの・GUI・ライブラリ・ランタイム類。
 
 # ------------------------------------------------------------------
-# CLI（コマンド置き換え系）
-# ------------------------------------------------------------------
-# bat / bottom / eza / dust / duf / fd / procs / ripgrep / sd / zoxide は nix/packages.nix
-brew 'httpie' #curl
-
-# ------------------------------------------------------------------
 # シェル・ターミナル
 # ------------------------------------------------------------------
-# starship / tmux / reattach-to-user-namespace / tree / wget / jq / pv / rsync は nix/packages.nix
+# bat / eza / fd / ripgrep などのコマンド置き換え系、starship / tmux / vim / jq なども nix/packages.nix
 brew 'bash-completion'
 # direnv は Home Manager（nix/direnv.nix）で nix-direnv と一緒に管理する
 # zsh-autosuggestions は brew ではなく ~/.zsh/ への手動 clone で管理している
 # （.zshrc が ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh を source）
-brew 'vim'
 # Nix の gnugrep は grep の名前で入り macOS の grep を置き換えるため、g 接頭辞で入る brew 版を使う
 brew 'grep'
 # Nix では inetutils（ping / hostname なども一緒に入る）になるため brew のまま

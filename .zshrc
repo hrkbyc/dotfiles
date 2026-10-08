@@ -151,12 +151,10 @@ fi
 # zoxide
 eval "$(zoxide init zsh)"
 
-# hstr
-# HSTR configuration - add this to ~/.zshrc
-alias hh=hstr                    # hh to be alias for hstr
-setopt histignorespace           # skip cmds w/ leading space from history
-export HSTR_CONFIG=hicolor       # get more colors
-bindkey -s "\C-r" "\C-a hstr -- \C-j"     # bind hstr to Ctrl-r (for Vi mode check doc)
+# 履歴
+# 先頭にスペースを付けたコマンドは履歴に残さない
+# （以前は hstr を Ctrl-R に割り当てていたが、未インストールで使っていなかったため外した。Ctrl-R は zsh 標準の履歴検索）
+setopt histignorespace
 
 # zsh-autosuggestions
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
