@@ -102,7 +102,6 @@ cask 'xcodes-app' # 旧名 xcodes は別名
 cask 'cmux'
 cask 'codex'
 cask 'orca'
-cask 'chatgpt-atlas'
 cask 'google-gemini'
 
 # --- JDK（jenv に登録して切り替える。global は 21）---
@@ -119,7 +118,6 @@ cask 'miniforge'
 cask '1password'
 cask 'raycast'
 cask 'appcleaner'
-cask 'bartender'
 cask 'rectangle'
 cask 'swiftbar'
 cask 'keyboardcleantool'
@@ -127,7 +125,6 @@ cask 'grandperspective'
 cask 'keka'
 cask 'rar'
 cask 'the-unarchiver'
-cask 'sf-symbols'
 
 # --- ストレージ・同期・リモート ---
 cask 'google-drive'
@@ -145,7 +142,6 @@ cask 'windows-app' # 旧 microsoft-remote-desktop
 # --- クリエイティブ・3D・GIS ---
 cask 'adobe-creative-cloud'
 cask 'blender'
-cask 'autodesk-fusion'
 cask 'paraview'
 cask 'qgis'
 cask 'obs'
