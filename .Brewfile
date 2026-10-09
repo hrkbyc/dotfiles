@@ -15,7 +15,6 @@ tap "stablyai/orca"
 # シェル・ターミナル
 # ------------------------------------------------------------------
 # bat / eza / fd / ripgrep などのコマンド置き換え系、starship / vim / jq なども nix/packages.nix
-brew 'bash-completion'
 # direnv は Home Manager（nix/direnv.nix）で nix-direnv と一緒に管理する
 # zsh-autosuggestions も nix/packages.nix
 # Nix の gnugrep は grep の名前で入り macOS の grep を置き換えるため、g 接頭辞で入る brew 版を使う
@@ -39,7 +38,6 @@ brew 'git'
 brew 'perl'
 brew 'php'
 # rustup は試しに入れただけで未使用のため外した（使うときは環境を作り直す）
-brew 'protobuf'
 brew 'cmake'
 brew 'pkgconf'
 
@@ -55,20 +53,13 @@ brew 'azure-cli'
 # データベース・ミドルウェア
 # ------------------------------------------------------------------
 brew 'mysql-client'
-brew 'redis'
-brew 'berkeley-db'
-brew 'unbound'
 
 # ------------------------------------------------------------------
 # メディア・画像処理
 # ------------------------------------------------------------------
 brew 'ffmpeg'
-brew 'srt'
-brew 'jpeg'
 brew 'librsvg'
-brew 'leptonica'
 brew 'poppler'
-brew 'libxml2'
 
 # ------------------------------------------------------------------
 # AI CLI
