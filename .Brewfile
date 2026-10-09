@@ -20,8 +20,6 @@ brew 'bash-completion'
 # zsh-autosuggestions も nix/packages.nix
 # Nix の gnugrep は grep の名前で入り macOS の grep を置き換えるため、g 接頭辞で入る brew 版を使う
 brew 'grep'
-# Nix では inetutils（ping / hostname なども一緒に入る）になるため brew のまま
-brew 'telnet'
 # brew bundle が Mac App Store の行を処理するのに使う
 brew 'mas'
 
@@ -57,7 +55,6 @@ brew 'azure-cli'
 # データベース・ミドルウェア
 # ------------------------------------------------------------------
 brew 'mysql-client'
-brew 'mysql-client@8.4'
 brew 'redis'
 brew 'berkeley-db'
 brew 'unbound'
