@@ -1,11 +1,5 @@
 cask_args appdir: "/Applications"
 
-tap "homebrew/bundle"
-tap "homebrew/services"
-tap "dart-lang/dart"
-tap "hashicorp/tap"
-tap "leoafarias/fvm"
-tap "shopify/shopify"
 tap "stablyai/orca"
 
 # 汎用の CLI ツールは Home Manager（nix/packages.nix）で管理する。

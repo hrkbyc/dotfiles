@@ -35,6 +35,9 @@
     git-filter-repo
     gitleaks
 
+    # 言語・SDK のバージョン管理
+    fvm # Flutter SDK（~/fvm 配下に SDK を置く。旧 brew の leoafarias/fvm tap）
+
     # クラウド・インフラ
     terraformer
     circleci-cli
