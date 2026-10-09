@@ -38,6 +38,9 @@
     # 言語・SDK のバージョン管理
     fvm # Flutter SDK（~/fvm 配下に SDK を置く。旧 brew の leoafarias/fvm tap）
 
+    # Shopify（BWS-Shopify のテーマ開発。旧 yarn global の @shopify/cli）
+    shopify-cli
+
     # クラウド・インフラ
     terraformer
     circleci-cli
